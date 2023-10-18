@@ -9,8 +9,8 @@ app.use(express.json());
 const port = process.env.PORT || 5000;
 
 app.use('/api/auth', require('./Routes/authRoute'))
-app.use('/api/user',require("./Routes/calendarRoute"));
-app.use('/api/user/message',require('./Routes/messageRoute'));
+// app.use('/api/user',require("./Routes/calendarRoute"));
+// app.use('/api/user/message',require('./Routes/messageRoute'));
 
 app.listen(port, ()=>{
     console.log("listening perfect");
