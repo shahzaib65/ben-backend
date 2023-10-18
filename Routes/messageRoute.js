@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Message = require("../Model/Message");
-const fetchuser = require("../middleware/fetchuser");
+const fetchuser = require("../middleware/FetchUser");
 const User = require("../Model/User");
 
 //endpoint to post Messages and store it in the backend
