@@ -127,7 +127,7 @@ router.get("/users/:userId", fetchuser, (req, res) => {
     });
 });
 
-enpoint Get loggedin User Details using: POST "/api/auth/getuser". Login required
+//enpoint Get loggedin User Details using: POST "/api/auth/getuser". Login required
 router.get('/getuser/:id', fetchuser,  async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select("-password")
