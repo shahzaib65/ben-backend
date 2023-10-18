@@ -5,7 +5,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const randomString = require("randomstring");
 const { body, validationResult } = require('express-validator');
-//var fetchuser = require('../middleware/fetchuser');
+var fetchuser = require('../middleware/FetchUser');
+
 const JWT_SECRET = 'Shahzaibisagoodb$oy';
 
 //endpoint to create user
