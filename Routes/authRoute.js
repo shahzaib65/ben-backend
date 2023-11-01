@@ -5,7 +5,13 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const randomString = require("randomstring");
 const { body, validationResult } = require('express-validator');
+<<<<<<< HEAD
 
+=======
+const fetchuser = require('../middleware/FetchUser');
+
+const JWT_SECRET = 'Shahzaibisagoodb$oy';
+>>>>>>> 07e4c2e4ec880b023db5863d16a3e6a86986f706
 
 //endpoint to create user
 router.post("/createuser",[
@@ -197,6 +203,7 @@ router.post('/login', [
 //         message: 'Your password has been updated'
 //       });
     
+<<<<<<< HEAD
 //   } catch (error) {
 //     res.status(400).send({error: error.message})
 //   }
@@ -215,5 +222,25 @@ router.post('/login', [
 //   res.status(400).send({error: error.message})
 // }
 // });
+=======
+  } catch (error) {
+    res.status(400).send({error: error.message})
+  }
+});
+//endpoint to delete the user
+router.delete("/delete-user/:id",fetchuser,async(req,res)=>{
+try {
+  const { id } = req.params;
+  const user = await User.findByIdAndDelete(id);
+  if (!user) {
+    return res.status(400).json({error: "User not found"});
+  }
+  res.status(200).json({message: "User deleted successfully"});
+
+} catch (error) {
+  res.status(400).send({error: error.message})
+}
+});
+>>>>>>> 07e4c2e4ec880b023db5863d16a3e6a86986f706
 
 module.exports = router;
