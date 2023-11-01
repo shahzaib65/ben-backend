@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Calendar = require("../Model/Calender");
-var fetchuser = require('../middleware/fetchuser');
+var fetchuser = require('../middleware/FetchUser');
 const { body, validationResult } = require('express-validator');
 
 //endpoint user set their availability

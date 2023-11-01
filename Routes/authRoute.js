@@ -5,43 +5,42 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const randomString = require("randomstring");
 const { body, validationResult } = require('express-validator');
-//const fetchuser = require('../middleware/FetchUser');
-const JWT_SECRET = 'Shahzaibisagoodb$oy';
+
 
 //endpoint to create user
-// router.post("/createuser",[
-//     body('username', 'Enter a valid username').isLength({ min: 3 }),
-//     body('password', 'Password must be atleast 5 characters').isLength({ min: 5 }),
-//     body('isAdmin','user will not admin')
-// ],async (req, res) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//       return res.status(400).json({ error: errors.array() });
-//     }
-//     try {
-//         let check_user = await User.findOne({ username: req.body.username });
-//         if (check_user) {
-//           return res.status(400).json({ error: "Sorry a user with this name already exists" })
-//         }
-//         const salt = await bcrypt.genSalt(10);
-//         const secPass = await bcrypt.hash(req.body.password, salt);
+router.post("/createuser",[
+    body('username', 'Enter a valid username').isLength({ min: 3 }),
+    body('password', 'Password must be atleast 5 characters').isLength({ min: 5 }),
+    body('isAdmin','user will not admin')
+],async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: errors.array() });
+    }
+    try {
+        let check_user = await User.findOne({ username: req.body.username });
+        if (check_user) {
+          return res.status(400).json({ error: "Sorry a user with this name already exists" })
+        }
+        const salt = await bcrypt.genSalt(10);
+        const secPass = await bcrypt.hash(req.body.password, salt);
 
-//         check_user = await User.create({
-//           username: req.body.username,
-//           password: secPass,
-//           isAdmin: req.body.isAdmin,
-//         });
-//         const data = {
-//           user: {
-//             id: check_user._id
-//           }
-//         }
-//         const authtoken = jwt.sign(data, JWT_SECRET);
-//         res.json({ authtoken })
-//       } catch (error) {
-//         res.status(500).send({error: error.message});
-//       }
-// });
+        check_user = await User.create({
+          username: req.body.username,
+          password: secPass,
+          isAdmin: req.body.isAdmin,
+        });
+        const data = {
+          user: {
+            id: check_user._id
+          }
+        }
+        const authtoken = jwt.sign(data, JWT_SECRET);
+        res.json({ authtoken })
+      } catch (error) {
+        res.status(500).send({error: error.message});
+      }
+});
 
 //endpoint to login user
 router.post('/login', [
@@ -53,7 +52,6 @@ router.post('/login', [
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-
   const { username, password } = req.body;
   try {
     let user = await User.findOne({ username });
@@ -65,15 +63,15 @@ router.post('/login', [
     if (!passwordCompare) {
       return res.status(400).json({ success, error: "Please try to login with correct credentials" });
     }
-    const data = {
-      user: {
-        id: user._id
-      }
-    }
+    // const data = {
+    //   user: {
+    //     id: user._id
+    //   }
+    // }
+    let userId = user._id
     isAdmin = user.isAdmin
    // console.log(data.user.id);
-    const authtoken = jwt.sign(data, JWT_SECRET);
-   // success = true;
+    const authtoken = jwt.sign(userId, JWT_SECRET);
     res.json({user,isAdmin, authtoken })
 
   } catch (error) {
